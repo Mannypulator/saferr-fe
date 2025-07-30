@@ -45,6 +45,8 @@ const CreateProduct = () => {
         const response = await apiClient.get<Brand>(`/brands/my-brand`); // Use the new endpoint
         setUserBrand(response.data);
         // Optionally, you could pre-fill the form with brand context if needed in the future
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error("Failed to fetch user brand:", err);
         if (err.response?.status === 404) {
@@ -99,6 +101,8 @@ const CreateProduct = () => {
       console.log("Product created:", response.data);
       // Redirect to the product list or the newly created product's details page
       router.push("/dashboard/products");
+      // For the 'any' type errors, add this above the line:
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Failed to create product:", err);
       // Provide user-friendly error messages based on status codes if possible

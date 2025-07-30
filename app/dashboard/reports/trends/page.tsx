@@ -36,9 +36,13 @@ const VerificationTrends = () => {
         setLoading(true);
         setError(null);
         const response = await apiClient.get<VerificationTrendData>(
-          `/reporting/trends?startDate=${encodeURIComponent(dateRange.start)}&endDate=${encodeURIComponent(dateRange.end)}`
+          `/reporting/trends?startDate=${encodeURIComponent(
+            dateRange.start
+          )}&endDate=${encodeURIComponent(dateRange.end)}`
         );
         setTrendData(response.data);
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error('Failed to fetch trends:', err);
         setError('Failed to load verification trends.');

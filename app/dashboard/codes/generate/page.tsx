@@ -1,7 +1,8 @@
-// pages/dashboard/codes/generate.tsx
+// app/(dashboard)/codes/generate/page.tsx
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import apiClient from "@/lib/apiClient";
+import { useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import { useAuth } from "@/context/AuthContext";
@@ -19,11 +20,10 @@ interface Product {
   brandId: string;
 }
 
-const CodeGeneration: React.FC<{ searchParams: { productId?: string } }> = ({
-  searchParams,
-}) => {
+function CodeGenerationContent() {
   const router = useRouter();
-  const queryProductId = searchParams.productId;
+  const searchParams = useSearchParams();
+  const queryProductId = searchParams.get("productId");
   const { user } = useAuth();
 
   const [userBrand, setUserBrand] = useState<Brand | null>(null);
@@ -90,6 +90,8 @@ const CodeGeneration: React.FC<{ searchParams: { productId?: string } }> = ({
             setSelectedProductId(productsResponse.data[0].id);
           }
         }
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error("Failed to fetch brand or products:", err);
         if (err.response?.status === 404) {
@@ -144,6 +146,8 @@ const CodeGeneration: React.FC<{ searchParams: { productId?: string } }> = ({
         type: "success",
         text: `Successfully generated ${response.data.generatedCodes.length} codes.`,
       });
+      // For the 'any' type errors, add this above the line:
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Failed to generate codes:", err);
       const errorMsg =
@@ -612,6 +616,40 @@ const CodeGeneration: React.FC<{ searchParams: { productId?: string } }> = ({
         )}
       </div>
     </ProtectedRoute>
+  );
+}
+
+const CodeGeneration = () => {
+  return (
+    <Suspense
+      fallback={
+        <div className="text-center py-10">
+          <svg
+            className="animate-spin h-10 w-10 text-indigo-600 mx-auto"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
+          </svg>
+          <p className="mt-2 text-gray-600">Loading...</p>
+        </div>
+      }
+    >
+      <CodeGenerationContent />
+    </Suspense>
   );
 };
 

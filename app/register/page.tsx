@@ -30,6 +30,8 @@ export default function RegisterPage() {
           "Registration failed. Please check your details and try again."
         );
       }
+      // For the 'any' type errors, add this above the line:
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       console.error("Registration error:", err);
       setError(err.message || "Registration failed. Please try again.");

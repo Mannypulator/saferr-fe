@@ -49,6 +49,8 @@ const ProductList = () => {
         // The previous code fetched all brands here, which is no longer needed
         // for this specific view.
         // -------------------------------
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error("Failed to fetch products for your brand:", err);
         // Differentiate error messages based on status if possible

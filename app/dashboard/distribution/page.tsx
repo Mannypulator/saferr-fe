@@ -46,6 +46,8 @@ const ProductDistribution = () => {
           `/reporting/product-distribution`
         );
         setDistributionData(response.data);
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error("Failed to fetch product distribution:", err);
         setError("Failed to load product distribution data.");

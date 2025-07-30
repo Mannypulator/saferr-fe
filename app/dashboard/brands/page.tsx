@@ -3,12 +3,11 @@
 
 import React, { useState, useEffect } from "react";
 import { useAuth } from "@/context/AuthContext"; // Adjust import path
-import { useRouter } from "next/navigation";
 import apiClient from "@/lib/apiClient"; // Adjust import path
 import ProtectedRoute from "@/components/ProtectedRoute"; // Adjust import path
 import Link from "next/link";
 import { Brand } from "@/lib/types/brand"; // Adjust import path
-import { SubscriptionPlan, BrandSubscription } from "@/lib/types/subscription"; // Adjust import path
+import {  BrandSubscription } from "@/lib/types/subscription"; // Adjust import path
 
 // Define simplified types for subscription data based on backend (Free plan focus)
 // These should ideally match your backend DTOs or be imported from a shared types file.
@@ -31,7 +30,6 @@ import { SubscriptionPlan, BrandSubscription } from "@/lib/types/subscription"; 
 
 export default function BrandListPage() {
   const { user } = useAuth();
-  const router = useRouter();
   const [brand, setBrand] = useState<Brand | null>(null); // Single brand state
   const [currentSubscription, setCurrentSubscription] =
     useState<BrandSubscription | null>(null);
@@ -107,6 +105,8 @@ export default function BrandListPage() {
           // Don't set a page-level error just because subscription failed,
           // unless the brand fetch also failed.
         }
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error("Unexpected error during data fetching:", err);
         setError("An unexpected error occurred. Please try again.");

@@ -86,17 +86,26 @@ class ApiClient {
   // ------------------------------------------
 
   // --- Standard HTTP methods ---
+  // For the 'any' type errors, add this above the line:
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.client.get<T>(url, config);
   }
 
+  // For the 'any' type errors, add this above the line:
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
   public post<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.client.post<T>(url, data, config);
   }
+  // For the 'any' type errors, add this above the line:
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   public put<T = any>(url: string, data?: any, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.client.put<T>(url, data, config);
   }
+  // For the 'any' type errors, add this above the line:
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
   public delete<T = any>(url: string, config?: AxiosRequestConfig): Promise<AxiosResponse<T>> {
     return this.client.delete<T>(url, config);

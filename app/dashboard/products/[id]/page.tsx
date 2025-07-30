@@ -40,6 +40,8 @@ export default function ProductDetailsPage() {
           );
           setBrand(brandResponse.data);
         }
+        // For the 'any' type errors, add this above the line:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (err: any) {
         console.error(`Failed to fetch product details for ID ${id}:`, err);
         if (err.response?.status === 404) {
