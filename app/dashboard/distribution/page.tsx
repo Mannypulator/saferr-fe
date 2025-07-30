@@ -1,4 +1,5 @@
 // pages/dashboard/reports/distribution.tsx
+"use client";
 import React, { useState, useEffect } from "react";
 import apiClient from "@/lib/apiClient";
 import ProtectedRoute from "@/components/ProtectedRoute";
